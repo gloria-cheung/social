@@ -1,20 +1,25 @@
 
-$primary: #003249;
-$secondary: #5e503f;
-$light: #ccdbdc;
-$warning: #cb997e;
-$dark: #22333b;
+$primary: #d6ccc2;
+$secondary: #e3d5ca;
+$success: #264653;
+$warning: #d5bdaf;
+$light: #edede9;
+$dark: #2b2d42; 
+$info: #6d6875;
+
 
 $theme-colors: (
   primary: $primary,
   secondary: $secondary,
+  success: $success,
   warning: $warning,
   light: $light,
   dark: $dark,
+  info: $info
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 .App {
-  color: #003249;
+  font-family: "Roboto", sans-serif;
 }
