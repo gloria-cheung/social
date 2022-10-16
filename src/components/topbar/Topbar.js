@@ -4,36 +4,35 @@ import "./Topbar.scss";
 
 function Topbar() {
   return (
-    <div className="Topbar">
-      <Navbar
-        bg="primary"
-        variant="primary"
-        expand="lg"
-        className="justify-content-center ps-3 pe-3 pt-0 pb-0"
+    <Navbar bg="primary" variant="primary" expand="lg" className="p-1">
+      <Navbar.Brand href="/">Social</Navbar.Brand>
+
+      <Form className="d-flex w-50 justify-content-center">
+        <InputGroup>
+          <InputGroup.Text id="basic-addon1">
+            <Search />
+          </InputGroup.Text>
+          <Form.Control
+            placeholder="Search for friend, post or video"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
+        </InputGroup>
+      </Form>
+
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+      <Navbar.Collapse
+        id="basic-navbar-nav"
+        className="justify-content-end"
+        variant=""
       >
-        <Navbar.Brand href="/">Social</Navbar.Brand>
-
-        <Form className="d-flex w-50 ">
-          <InputGroup>
-            <InputGroup.Text id="basic-addon1">
-              <Search />
-            </InputGroup.Text>
-            <Form.Control
-              placeholder="Search for friend, post or video"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </InputGroup>
-        </Form>
-
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
-        <Navbar.Collapse id="basic-navbar-nav" variant="">
-          <Nav className="">
+        <Nav className="">
+          <div className="d-flex justify-content-around">
             <Nav.Link href="/" className="d-flex align-items-center">
               Home
             </Nav.Link>
-            <Nav.Link href="/" className="d-flex align-items-center pe-4 me-5">
+            <Nav.Link href="/" className="d-flex align-items-center">
               Timeline
             </Nav.Link>
             <Nav.Link href="/" className="iconContainer">
@@ -54,19 +53,17 @@ function Topbar() {
                 1
               </Badge>
             </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-        <Nav>
-          <Nav.Link href="/">
-            <Image
-              className="profilePic"
-              src="/assets/person/1.jpeg"
-              alt="profilepic"
-            />
-          </Nav.Link>
+            <Nav.Link href="/">
+              <Image
+                className="profilePic"
+                src="/assets/person/1.jpeg"
+                alt="profilepic"
+              />
+            </Nav.Link>
+          </div>
         </Nav>
-      </Navbar>
-    </div>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
 
