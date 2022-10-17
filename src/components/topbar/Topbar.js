@@ -1,8 +1,10 @@
 import { Form, InputGroup, Nav, Navbar, Image, Badge } from "react-bootstrap";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Users } from "../../dummyData";
 import "./Topbar.scss";
 
 function Topbar() {
+  const currentUser = Users[0];
   return (
     <Navbar bg="primary" variant="primary" expand="lg" className="p-1">
       <Navbar.Brand href="/">Social</Navbar.Brand>
@@ -56,7 +58,7 @@ function Topbar() {
             <Nav.Link href="/">
               <Image
                 className="profilePic"
-                src="/assets/person/1.jpeg"
+                src={currentUser.profilePicture}
                 alt="profilepic"
               />
             </Nav.Link>
