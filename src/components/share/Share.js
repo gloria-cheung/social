@@ -5,22 +5,25 @@ import {
   LocationOnOutlined,
   TagFacesOutlined,
 } from "@material-ui/icons";
+import { Users } from "../../dummyData";
 import "./Share.scss";
 
 function Share() {
+  const currentUser = Users[0];
+
   return (
     <div className="share">
       <Container className="shareTop pt-3 pb-3 border-bottom">
         <Image
           className="profilePic me-3"
-          src="/assets/person/1.jpeg"
+          src={currentUser.profilePicture}
           alt="profilepic"
         />
         <form>
           <input
             className="status"
             type="text"
-            placeholder="What's on your mind, Gloria?"
+            placeholder={`What's on your mind, ${currentUser.username}?`}
           />
         </form>
       </Container>
