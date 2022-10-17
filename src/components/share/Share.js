@@ -5,11 +5,10 @@ import {
   LocationOnOutlined,
   TagFacesOutlined,
 } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import "./Share.scss";
 
-function Share() {
-  const currentUser = Users[0];
+function Share(props) {
+  const { currentUser } = props;
 
   return (
     <div className="share">

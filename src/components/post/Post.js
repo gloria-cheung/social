@@ -5,20 +5,22 @@ import {
   ChatBubbleOutlineOutlined,
   SendOutlined,
 } from "@material-ui/icons";
-import { Users, Posts } from "../../dummyData";
 import "./Post.scss";
 
-function Post() {
-  const posts = Posts.map((post) => (
+function Post(props) {
+  const { postsData, usersData } = props;
+  const posts = postsData.map((post) => (
     <Card className="border-0 mt-3">
       <Card.Header className="d-flex align-items-center justify-content-between postHeader border-0">
         <div className="postHeaderLeft">
           <Image
             className="profilePic me-2"
-            src={Users.find((user) => user.id === post.userId).profilePicture}
+            src={
+              usersData.find((user) => user.id === post.userId).profilePicture
+            }
             alt="profilepic"
           />
-          {Users.find((user) => user.id === post.userId).username}{" "}
+          {usersData.find((user) => user.id === post.userId).username}{" "}
           <span className="muted">{post.date}</span>
         </div>
         <div className="postHeaderRight">
