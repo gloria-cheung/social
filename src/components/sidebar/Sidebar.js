@@ -10,9 +10,21 @@ import {
   EventOutlined,
   SchoolOutlined,
 } from "@material-ui/icons";
+import { Users } from "../../dummyData";
 import "./Sidebar.scss";
 
 function Sidebar() {
+  const users = Users.map((user) => (
+    <ListGroup.Item as="li" key={user.id}>
+      <Image
+        src={user.profilePicture}
+        alt="followingsImg"
+        className="followingsImg"
+      />
+      {user.username}
+    </ListGroup.Item>
+  ));
+
   return (
     <Container className="p-3 sidebar">
       <ListGroup as="ul" variant="flush">
@@ -50,30 +62,7 @@ function Sidebar() {
       <Button className="ps-5 pe-5">Show More</Button>
       <hr />
       <ListGroup as="ul" variant="flush">
-        <ListGroup.Item as="li">
-          <Image
-            src="/assets/person/2.jpeg"
-            alt="followingsImg"
-            className="followingsImg"
-          />
-          Jane Doe
-        </ListGroup.Item>
-        <ListGroup.Item as="li">
-          <Image
-            src="/assets/person/2.jpeg"
-            alt="followingsImg"
-            className="followingsImg"
-          />
-          Jane Doe
-        </ListGroup.Item>
-        <ListGroup.Item as="li">
-          <Image
-            src="/assets/person/2.jpeg"
-            alt="followingsImg"
-            className="followingsImg"
-          />
-          Jane Doe
-        </ListGroup.Item>
+        {users}
       </ListGroup>
     </Container>
   );
