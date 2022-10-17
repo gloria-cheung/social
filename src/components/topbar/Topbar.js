@@ -6,7 +6,13 @@ import "./Topbar.scss";
 function Topbar() {
   const currentUser = Users[0];
   return (
-    <Navbar bg="primary" variant="primary" expand="lg" className="p-1">
+    <Navbar
+      sticky="top"
+      bg="primary"
+      variant="primary"
+      expand="lg"
+      className="p-1"
+    >
       <Navbar.Brand href="/">Social</Navbar.Brand>
 
       <Form className="d-flex w-50 justify-content-center">
