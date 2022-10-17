@@ -1,9 +1,15 @@
-import {} from "react-bootstrap";
-import {} from "@material-ui/icons";
+import { Container } from "react-bootstrap";
+import Share from "../share/Share";
+import Post from "../post/Post";
 import "./Feed.scss";
 
 function Feed() {
-  return <div className="feed">feed</div>;
+  return (
+    <Container className="feed">
+      <Share />
+      <Post />
+    </Container>
+  );
 }
 
 export default Feed;

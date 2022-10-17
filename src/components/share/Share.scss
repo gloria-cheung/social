@@ -1,0 +1,33 @@
+.profilePic {
+  width: 2.5em;
+  height: 2.5em;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.shareTop {
+  display: flex;
+  width: 100%;
+
+  form {
+    width: 100%;
+    display: flex;
+
+    input {
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+.status {
+  border: none;
+}
+.shareBottomListItem {
+  font-size: small;
+  a{
+    text-decoration: none;
+    color: #2b2d42;
+  }
+}
