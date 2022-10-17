@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Card, Image } from "react-bootstrap";
 import {
   MoreVert,
   FavoriteBorderOutlined,
+  FavoriteOutlined,
   ChatBubbleOutlineOutlined,
   SendOutlined,
 } from "@material-ui/icons";
@@ -9,6 +11,18 @@ import "./Post.scss";
 
 function Post(props) {
   const { post, user } = props;
+  const [likes, setLikes] = useState(post.like);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const likeHandler = () => {
+    if (!isLiked) {
+      setLikes(likes + 1);
+      setIsLiked(true);
+    } else {
+      setLikes(likes - 1);
+      setIsLiked(false);
+    }
+  };
 
   return (
     <Card className="border-0 mt-3">
@@ -31,10 +45,22 @@ function Post(props) {
 
       <Card.Body>
         <div className="cardImgFooter">
-          <FavoriteBorderOutlined className="cardImgFooterIcon" />
+          {isLiked ? (
+            <FavoriteOutlined
+              className="cardImgFooterIcon"
+              onClick={likeHandler}
+              htmlColor="salmon"
+            />
+          ) : (
+            <FavoriteBorderOutlined
+              className="cardImgFooterIcon"
+              onClick={likeHandler}
+            />
+          )}
+
           <ChatBubbleOutlineOutlined className="cardImgFooterIcon" />
           <SendOutlined className="cardImgFooterIcon" />
-          <p>Liked by {post.like} people</p>
+          <p>Liked by {likes} people</p>
         </div>
         <Card.Text>{post.desc && post.desc}</Card.Text>
       </Card.Body>
