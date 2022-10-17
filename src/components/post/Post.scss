@@ -10,8 +10,11 @@
 }
 .cardImgFooterIcon {
   margin-right: 1em;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .more {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }

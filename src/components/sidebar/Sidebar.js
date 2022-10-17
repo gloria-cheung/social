@@ -1,4 +1,4 @@
-import { Container, ListGroup, Button, Image } from "react-bootstrap";
+import { Container, ListGroup, Button } from "react-bootstrap";
 import {
   RssFeedOutlined,
   ChatOutlined,
@@ -10,6 +10,9 @@ import {
   EventOutlined,
   SchoolOutlined,
 } from "@material-ui/icons";
+import { Users } from "../../dummyData";
+import CloseFriends from "../closefriends/CloseFriends";
+
 import "./Sidebar.scss";
 
 function Sidebar() {
@@ -50,30 +53,7 @@ function Sidebar() {
       <Button className="ps-5 pe-5">Show More</Button>
       <hr />
       <ListGroup as="ul" variant="flush">
-        <ListGroup.Item as="li">
-          <Image
-            src="/assets/person/2.jpeg"
-            alt="followingsImg"
-            className="followingsImg"
-          />
-          Jane Doe
-        </ListGroup.Item>
-        <ListGroup.Item as="li">
-          <Image
-            src="/assets/person/2.jpeg"
-            alt="followingsImg"
-            className="followingsImg"
-          />
-          Jane Doe
-        </ListGroup.Item>
-        <ListGroup.Item as="li">
-          <Image
-            src="/assets/person/2.jpeg"
-            alt="followingsImg"
-            className="followingsImg"
-          />
-          Jane Doe
-        </ListGroup.Item>
+        <CloseFriends usersData={Users} />
       </ListGroup>
     </Container>
   );
