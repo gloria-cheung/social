@@ -8,7 +8,15 @@ function Feed() {
   return (
     <Container className="feed">
       <Share currentUser={Users[0]} />
-      <Post postsData={Posts} usersData={Users} />
+      <Container className="postsContainer ps-0 pe-0 pt-5">
+        {Posts.map((post) => (
+          <Post
+            post={post}
+            key={post.id}
+            user={Users.find((user) => user.id === post.userId)}
+          />
+        ))}
+      </Container>
     </Container>
   );
 }
