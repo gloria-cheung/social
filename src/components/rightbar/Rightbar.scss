@@ -1,3 +1,36 @@
 .rightbar {
   flex: 3.5;
 }
+.birthdayContainer {
+  p {
+    line-height: 1.25em;
+    font-weight: 300;
+    b {
+      font-weight: 600;
+    }
+  }
+  .birthdayLogo {
+    width: 2em;
+    height: 2em;
+  }
+}
+.friendListContainer {
+  h5 {
+    padding-top: 1em;
+  }
+
+  .onlineFriendsImageContainer {
+    position: relative;
+  
+    .online {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: limegreen;
+      position: absolute;
+      left: 30px;
+    }
+  }
+}
+
+
