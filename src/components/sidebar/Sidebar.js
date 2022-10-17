@@ -1,4 +1,4 @@
-import { Container, ListGroup, Button, Image } from "react-bootstrap";
+import { Container, ListGroup, Button } from "react-bootstrap";
 import {
   RssFeedOutlined,
   ChatOutlined,
@@ -11,20 +11,11 @@ import {
   SchoolOutlined,
 } from "@material-ui/icons";
 import { Users } from "../../dummyData";
+import CloseFriends from "../closefriends/CloseFriends";
+
 import "./Sidebar.scss";
 
 function Sidebar() {
-  const users = Users.map((user) => (
-    <ListGroup.Item as="li" key={user.id}>
-      <Image
-        src={user.profilePicture}
-        alt="followingsImg"
-        className="followingsImg"
-      />
-      {user.username}
-    </ListGroup.Item>
-  ));
-
   return (
     <Container className="p-3 sidebar">
       <ListGroup as="ul" variant="flush">
@@ -62,7 +53,7 @@ function Sidebar() {
       <Button className="ps-5 pe-5">Show More</Button>
       <hr />
       <ListGroup as="ul" variant="flush">
-        {users}
+        <CloseFriends usersData={Users} />
       </ListGroup>
     </Container>
   );
