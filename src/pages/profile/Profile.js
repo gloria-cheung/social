@@ -5,6 +5,8 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import "./Profile.scss";
 
 function Profile() {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
     <>
       <Topbar />
@@ -13,7 +15,7 @@ function Profile() {
         <div className="right">
           <div className="rightTop">
             <img
-              src="assets/post/3.jpeg"
+              src={PF + "post/3.jpeg"}
               alt="coverPicture"
               className="coverPicture"
             />
@@ -22,7 +24,7 @@ function Profile() {
               <p>Hello my friends!</p>
             </div>
             <img
-              src="assets/person/3.jpeg"
+              src={PF + "person/3.jpeg"}
               alt="profilePic"
               className="profilePic"
             />

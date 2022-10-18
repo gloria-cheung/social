@@ -5,6 +5,8 @@ import "./Topbar.scss";
 
 function Topbar() {
   const currentUser = Users[0];
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   return (
     <Navbar
       sticky="top"
@@ -64,7 +66,7 @@ function Topbar() {
             <Nav.Link href="/">
               <Image
                 className="profilePic"
-                src={currentUser.profilePicture}
+                src={PF + currentUser.profilePicture}
                 alt="profilepic"
               />
             </Nav.Link>

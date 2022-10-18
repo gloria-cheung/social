@@ -9,13 +9,14 @@ import "./Share.scss";
 
 function Share(props) {
   const { currentUser } = props;
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <div className="share">
       <Container className="shareTop pt-3 pb-3 border-bottom">
         <Image
           className="profilePic me-3"
-          src={currentUser.profilePicture}
+          src={PF + currentUser.profilePicture}
           alt="profilepic"
         />
         <form>
