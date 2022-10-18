@@ -1,0 +1,40 @@
+.profile {
+  display: flex;
+  width: 100%;
+
+  .right {
+    flex: 9;
+    .rightTop {
+      position: relative;
+
+      .coverPicture {
+        height: 15em;
+        width: 100%;
+        object-fit: cover;
+      }
+      .coverPictureBottom {
+        height: 8em;
+        width: 100%;
+        background-color: whilte;
+        text-align: center;
+        padding-top: 3.5em;
+        border-bottom: 1px solid lightgray;
+      }
+
+      .profilePic {
+        width: 10em;
+        height: 10em;
+        object-fit: cover;
+        border-radius: 50%;
+        position: absolute;
+        top: 8em;
+        left: calc(50% - 5em);
+        
+      }
+    }
+      
+    .rightBottom {
+      display: flex;
+    }
+  }
+}
