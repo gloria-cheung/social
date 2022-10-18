@@ -1,11 +1,12 @@
-import { Container, Image, ListGroup } from "react-bootstrap";
+import { Container, Image, ListGroup, Row, Col } from "react-bootstrap";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import "./Rightbar.scss";
 
-function Rightbar() {
-  return (
-    <Container className="rightbar pt-3">
+function Rightbar(props) {
+  const { profile } = props;
+  const homeRightBar = (
+    <>
       <Container className="birthdayContainer d-flex">
         <Image
           src="./assets/gift.png"
@@ -25,6 +26,36 @@ function Rightbar() {
           <Online usersData={Users} />
         </ListGroup>
       </Container>
+    </>
+  );
+  const profileRightBar = (
+    <>
+      <Container className="userDetailsContainer">
+        <h5>User Info</h5>
+        <p>City: New York</p>
+        <p>From: Toronto</p>
+        <p>Relationship: Single</p>
+      </Container>
+      <Container className="friendListContainer">
+        <h5>User Friends</h5>
+        <Row className="flex-wrap">
+          {Users.map((user) => (
+            <Col md={4} className="friendsContainer" key={user.id}>
+              <Image
+                className="friendsImage"
+                src={user.profilePicture}
+                alt="friends"
+              />
+              <p className="friendsUsername">{user.username}</p>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </>
+  );
+  return (
+    <Container className="rightbar pt-3">
+      {profile ? profileRightBar : homeRightBar}
     </Container>
   );
 }
