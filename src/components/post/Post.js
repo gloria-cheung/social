@@ -13,6 +13,7 @@ function Post(props) {
   const { post, user } = props;
   const [likes, setLikes] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const likeHandler = () => {
     if (!isLiked) {
@@ -30,7 +31,7 @@ function Post(props) {
         <div className="postHeaderLeft">
           <Image
             className="profilePic me-2"
-            src={user.profilePicture}
+            src={PF + user.profilePicture}
             alt="profilepic"
           />
           {user.username}
@@ -41,7 +42,7 @@ function Post(props) {
         </div>
       </Card.Header>
 
-      <Card.Img variant="top" src={post.photo} />
+      <Card.Img variant="top" src={PF + post.photo} />
 
       <Card.Body>
         <div className="cardImgFooter">

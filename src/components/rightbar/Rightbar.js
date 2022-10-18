@@ -5,6 +5,8 @@ import "./Rightbar.scss";
 
 function Rightbar(props) {
   const { profile } = props;
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   const homeRightBar = (
     <>
       <Container className="birthdayContainer d-flex">
@@ -43,7 +45,7 @@ function Rightbar(props) {
             <Col md={4} className="friendsContainer" key={user.id}>
               <Image
                 className="friendsImage"
-                src={user.profilePicture}
+                src={PF + user.profilePicture}
                 alt="friends"
               />
               <p className="friendsUsername">{user.username}</p>

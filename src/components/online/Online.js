@@ -3,6 +3,7 @@ import "./Online.scss";
 
 function Online(props) {
   const { usersData } = props;
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const users = usersData.map((user) => (
     <ListGroup.Item
@@ -13,7 +14,7 @@ function Online(props) {
       <div className="onlineFriendsImageContainer">
         <Image
           className="profilePic me-2"
-          src={user.profilePicture}
+          src={PF + user.profilePicture}
           alt="profilepic"
         />
         <span className="online"></span>
