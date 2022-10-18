@@ -1,11 +1,21 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Form, InputGroup, Nav, Navbar, Image, Badge } from "react-bootstrap";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import "./Topbar.scss";
 
 function Topbar() {
-  const currentUser = Users[0];
+  const [currentUser, setCurrentUser] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    axios
+      .get("/users/634ef7118e7c291c399eb556")
+      .then((result) => {
+        setCurrentUser(result.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <Navbar
@@ -66,7 +76,7 @@ function Topbar() {
             <Nav.Link href="/">
               <Image
                 className="profilePic"
-                src={PF + currentUser.profilePicture}
+                src={currentUser.profilePicture || PF + "person/noAvatar.png"}
                 alt="profilepic"
               />
             </Nav.Link>
