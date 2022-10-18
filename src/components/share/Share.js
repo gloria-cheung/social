@@ -16,7 +16,7 @@ function Share(props) {
       <Container className="shareTop pt-3 pb-3 border-bottom">
         <Image
           className="profilePic me-3"
-          src={PF + currentUser.profilePicture}
+          src={currentUser.profilePicture || PF + "person/noAvatar.png"}
           alt="profilepic"
         />
         <form>
