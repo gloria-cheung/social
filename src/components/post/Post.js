@@ -9,6 +9,7 @@ import {
 } from "@material-ui/icons";
 import "./Post.scss";
 import axios from "axios";
+import { format } from "timeago.js";
 
 function Post(props) {
   const { post } = props;
@@ -46,7 +47,7 @@ function Post(props) {
             alt="profilepic"
           />
           {user.username}
-          <span className="muted">{post.createdAt}</span>
+          <span className="muted">{format(post.createdAt)}</span>
         </div>
         <div className="postHeaderRight">
           <MoreVert />
