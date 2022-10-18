@@ -19,5 +19,20 @@
     padding-top: 1em;
   }
 }
+.friendsContainer {
+  cursor: pointer;
+  padding: 0;
+}
+
+.friendsImage {
+  height: 6em;
+  width: 6em;
+  border-radius: 5px;
+  object-fit: cover;
+}
+.friendsUsername {
+  font-size: small;
+  margin-bottom: 0;
+}
 
 
