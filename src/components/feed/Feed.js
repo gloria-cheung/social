@@ -36,7 +36,7 @@ function Feed() {
       <Share currentUser={currentUser} />
       <Container className="postsContainer ps-0 pe-0 pt-5">
         {posts.map((post) => (
-          <Post post={post} key={post.id} />
+          <Post post={post} key={post._id} />
         ))}
       </Container>
     </Container>
