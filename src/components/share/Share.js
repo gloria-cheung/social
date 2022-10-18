@@ -30,25 +30,25 @@ function Share(props) {
       <Container className="shareBottom mt-3 ms-0 me-0 d-flex justify-content-between">
         <ListGroup as="ul" horizontal>
           <ListGroup.Item as="li" className="shareBottomListItem border-0">
-            <a href="#">
+            <a href="/">
               <PermMediaOutlined htmlColor="coral" />
               Photo or Video
             </a>
           </ListGroup.Item>
           <ListGroup.Item as="li" className="shareBottomListItem border-0">
-            <a href="#">
+            <a href="/">
               <LabelOutlined htmlColor="skyblue" />
               Tag
             </a>
           </ListGroup.Item>
           <ListGroup.Item as="li" className="shareBottomListItem border-0">
-            <a href="#">
+            <a href="/">
               <LocationOnOutlined htmlColor="olive" />
               Location
             </a>
           </ListGroup.Item>
           <ListGroup.Item as="li" className="shareBottomListItem border-0">
-            <a href="#">
+            <a href="/">
               <TagFacesOutlined htmlColor="goldenrod" />
               Feelings
             </a>
