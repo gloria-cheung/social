@@ -1,11 +1,23 @@
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Container, Image, ListGroup, Row, Col } from "react-bootstrap";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
+import axios from "axios";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
   const { user } = props;
-  console.log(user);
+  const { currentUser } = useContext(AuthContext);
+  const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await axios.get(`/users/${currentUser._id}/followings`);
+      setCurrentUserFollowings(res.data);
+    };
+    fetchUsers();
+  }, [currentUser]);
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const getRelationshipStatus = (num) => {
@@ -39,7 +51,7 @@ function Rightbar(props) {
       <Container className="friendListContainer">
         <h5>Online Friends</h5>
         <ListGroup as="ul" className="border-0">
-          <Online usersData={Users} />
+          <Online usersData={currentUserFollowings} />
         </ListGroup>
       </Container>
     </>
@@ -55,11 +67,11 @@ function Rightbar(props) {
       <Container className="friendListContainer">
         <h5>User Friends</h5>
         <Row className="flex-wrap">
-          {Users.map((user) => (
-            <Col md={4} className="friendsContainer" key={user.id}>
+          {currentUserFollowings.map((user) => (
+            <Col md={4} className="friendsContainer" key={user._id}>
               <Image
                 className="friendsImage"
-                src={PF + user.profilePicture}
+                src={user.profilePicture || PF + "person/noAvatar.png"}
                 alt="friends"
               />
               <p className="friendsUsername">{user.username}</p>
