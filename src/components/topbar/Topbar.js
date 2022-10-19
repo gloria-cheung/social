@@ -10,7 +10,7 @@ function Topbar() {
 
   useEffect(() => {
     axios
-      .get("/users/634ef7118e7c291c399eb556")
+      .get("/users?username=gloria")
       .then((result) => {
         setCurrentUser(result.data);
       })
@@ -73,7 +73,7 @@ function Topbar() {
                 1
               </Badge>
             </Nav.Link>
-            <Nav.Link href="/">
+            <Nav.Link href="/profile/gloria">
               <Image
                 className="profilePic"
                 src={currentUser.profilePicture || PF + "person/noAvatar.png"}

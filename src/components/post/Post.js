@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Card, Image } from "react-bootstrap";
 import {
   MoreVert,
@@ -20,7 +21,7 @@ function Post(props) {
 
   useEffect(() => {
     axios
-      .get(`/users/${post.userId}`)
+      .get(`/users?userId=${post.userId}`)
       .then((result) => {
         setUser(result.data);
       })
@@ -41,11 +42,13 @@ function Post(props) {
     <Card className="border-0 mt-3">
       <Card.Header className="d-flex align-items-center justify-content-between postHeader border-0">
         <div className="postHeaderLeft">
-          <Image
-            className="profilePic me-2"
-            src={user.profilePicture || PF + "person/noAvatar.png"}
-            alt="profilepic"
-          />
+          <Link to={`/profile/${user.username}`}>
+            <Image
+              className="profilePic me-2"
+              src={user.profilePicture || PF + "person/noAvatar.png"}
+              alt="profilepic"
+            />
+          </Link>
           {user.username}
           <span className="muted">{format(post.createdAt)}</span>
         </div>
