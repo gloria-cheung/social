@@ -40,8 +40,8 @@ function Feed(props) {
 
   return (
     <Container className="feed">
-      <Share currentUser={currentUser} />
-      <Container className="postsContainer ps-0 pe-0 pt-5">
+      {!username && <Share currentUser={currentUser} />}
+      <Container className="postsContainer ps-0 pe-0">
         {posts.map((post) => (
           <Post post={post} key={post._id} />
         ))}
