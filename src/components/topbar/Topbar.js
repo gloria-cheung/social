@@ -1,21 +1,12 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Form, InputGroup, Nav, Navbar, Image, Badge } from "react-bootstrap";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import "./Topbar.scss";
 
 function Topbar() {
-  const [currentUser, setCurrentUser] = useState({});
+  const { currentUser } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  useEffect(() => {
-    axios
-      .get("/users?username=gloria")
-      .then((result) => {
-        setCurrentUser(result.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <Navbar
