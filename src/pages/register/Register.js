@@ -98,7 +98,12 @@ function Register() {
           </Form>
           <p>Already have an Account? </p>
           <div className="d-grid gap-2">
-            <Button variant="primary" disabled={isFetching}>
+            <Button
+              as="a"
+              href="/login"
+              variant="primary"
+              disabled={isFetching}
+            >
               Login
             </Button>
           </div>
