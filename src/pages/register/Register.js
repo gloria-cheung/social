@@ -17,7 +17,8 @@ function Register() {
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
-  const { currentUser, error, isFetching, dispatch } = useContext(AuthContext);
+
+  const { error, isFetching, dispatch } = useContext(AuthContext);
 
   const clickHandler = (e) => {
     e.preventDefault();
