@@ -1,17 +1,35 @@
-import { useRef } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useRef, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Alert,
+  Spinner,
+} from "react-bootstrap";
+import { loginCall } from "../../apiCalls";
+import { AuthContext } from "../../context/AuthContext";
 import "./Login.scss";
 
 function Login() {
   // better than useState so doesnt constantly re render component
   const email = useRef();
   const password = useRef();
+  const history = useHistory();
+
+  const { currentUser, isFetching, error, dispatch } = useContext(AuthContext);
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(email.current.value);
-    console.log(password.current.value);
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
+    // history.push("/");
   };
+  console.log(currentUser);
 
   return (
     <Container className="d-flex justify-content-center loginRegisterContainer">
@@ -42,14 +60,25 @@ function Login() {
             />
 
             <div className="d-grid gap-2">
-              <Button type="submit" variant="primary">
-                Login
+              <Button type="submit" variant="primary" disabled={isFetching}>
+                {isFetching ? (
+                  <Spinner animation="border" size="sm" variant="light" />
+                ) : (
+                  "Login"
+                )}
               </Button>
             </div>
+            {error && (
+              <Alert className="mt-3 pt-1 pb-1 text-center" variant="error">
+                Error, Please Try Again
+              </Alert>
+            )}
           </Form>
           <p>Dont have an Account? </p>
           <div className="d-grid gap-2">
-            <Button variant="success">Create New Account</Button>
+            <Button variant="success" disabled={isFetching}>
+              Create New Account
+            </Button>
           </div>
         </Col>
       </Row>
