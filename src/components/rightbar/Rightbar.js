@@ -4,8 +4,22 @@ import Online from "../online/Online";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
-  const { profile } = props;
+  const { user } = props;
+  console.log(user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const getRelationshipStatus = (num) => {
+    switch (num) {
+      case 1:
+        return "Single";
+      case 2:
+        return "In a Relationship";
+      case 3:
+        return "It's Complicated";
+      default:
+        return "Unknown";
+    }
+  };
 
   const homeRightBar = (
     <>
@@ -34,9 +48,9 @@ function Rightbar(props) {
     <>
       <Container className="userDetailsContainer">
         <h5>User Info</h5>
-        <p>City: New York</p>
-        <p>From: Toronto</p>
-        <p>Relationship: Single</p>
+        <p>City: {user.city}</p>
+        <p>From: {user.from}</p>
+        <p>Relationship: {getRelationshipStatus(user.relationship)}</p>
       </Container>
       <Container className="friendListContainer">
         <h5>User Friends</h5>
@@ -57,7 +71,7 @@ function Rightbar(props) {
   );
   return (
     <Container className="rightbar pt-3">
-      {profile ? profileRightBar : homeRightBar}
+      {user ? profileRightBar : homeRightBar}
     </Container>
   );
 }
