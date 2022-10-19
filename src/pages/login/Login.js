@@ -72,7 +72,12 @@ function Login() {
           </Form>
           <p>Dont have an Account? </p>
           <div className="d-grid gap-2">
-            <Button variant="success" disabled={isFetching}>
+            <Button
+              as="a"
+              href="/register"
+              variant="success"
+              disabled={isFetching}
+            >
               Create New Account
             </Button>
           </div>
