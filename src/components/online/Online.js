@@ -9,12 +9,12 @@ function Online(props) {
     <ListGroup.Item
       as="li"
       className="border-0 d-flex align-items-center"
-      key={user.id}
+      key={user._id}
     >
       <div className="onlineFriendsImageContainer">
         <Image
           className="profilePic me-2"
-          src={PF + user.profilePicture}
+          src={user.profilePicture || PF + "person/noAvatar.png"}
           alt="profilepic"
         />
         <span className="online"></span>
