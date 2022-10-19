@@ -1,19 +1,28 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Share from "../share/Share";
 import Post from "../post/Post";
+import axios from "axios";
 import "./Feed.scss";
 
-function Feed() {
+function Feed(props) {
+  const profile = props.profile;
   const [posts, setPosts] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+  const { username } = useParams();
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const result = await axios.get(
-          "/posts/timeline/634ef7118e7c291c399eb556"
-        );
+        let userId;
+        if (username) {
+          let user = await axios.get(`/users?username=${username}`);
+          userId = user.data._id;
+        }
+        const result = profile
+          ? await axios.get(`/posts/profile/${userId}`)
+          : await axios.get("/posts/timeline/634ef7118e7c291c399eb556");
         setPosts(result.data);
       } catch (err) {
         console.log(err);
@@ -21,7 +30,7 @@ function Feed() {
     };
     const fetchCurrentUser = async () => {
       try {
-        const result = await axios.get("/users/634ef7118e7c291c399eb556");
+        const result = await axios.get("/users?username=gloria");
         setCurrentUser(result.data);
       } catch (err) {
         console.log(err);
@@ -29,7 +38,7 @@ function Feed() {
     };
     fetchPosts();
     fetchCurrentUser();
-  }, []);
+  }, [profile, username]);
 
   return (
     <Container className="feed">
