@@ -6,6 +6,7 @@ $warning: #d5bdaf;
 $light: #edede9;
 $dark: #2b2d42; 
 $info: #6d6875;
+$error: rgb(205, 90, 90);
 
 
 $theme-colors: (
@@ -15,7 +16,8 @@ $theme-colors: (
   warning: $warning,
   light: $light,
   dark: $dark,
-  info: $info
+  info: $info,
+  error: $error
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
