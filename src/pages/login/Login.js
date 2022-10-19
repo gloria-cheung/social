@@ -1,5 +1,4 @@
 import { useRef, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import {
   Container,
   Row,
@@ -17,7 +16,6 @@ function Login() {
   // better than useState so doesnt constantly re render component
   const email = useRef();
   const password = useRef();
-  const history = useHistory();
 
   const { currentUser, isFetching, error, dispatch } = useContext(AuthContext);
 
@@ -27,9 +25,7 @@ function Login() {
       { email: email.current.value, password: password.current.value },
       dispatch
     );
-    // history.push("/");
   };
-  console.log(currentUser);
 
   return (
     <Container className="d-flex justify-content-center loginRegisterContainer">
