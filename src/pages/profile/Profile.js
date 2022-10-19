@@ -47,8 +47,8 @@ function Profile() {
             />
           </div>
           <div className="rightBottom">
-            <Feed profile />
-            <Rightbar profile user={user} />
+            <Feed username={username} />
+            <Rightbar user={user} />
           </div>
         </div>
       </div>
