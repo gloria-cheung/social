@@ -4,8 +4,10 @@ import Online from "../online/Online";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
-  const { profile, user } = props;
+  const { user } = props;
+  console.log(user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   const getRelationshipStatus = (num) => {
     switch (num) {
       case 1:
@@ -69,7 +71,7 @@ function Rightbar(props) {
   );
   return (
     <Container className="rightbar pt-3">
-      {profile ? profileRightBar : homeRightBar}
+      {user ? profileRightBar : homeRightBar}
     </Container>
   );
 }
