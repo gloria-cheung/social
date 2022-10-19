@@ -1,7 +1,18 @@
+import { useRef } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./Login.scss";
 
 function Login() {
+  // better than useState so doesnt constantly re render component
+  const email = useRef();
+  const password = useRef();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(email.current.value);
+    console.log(password.current.value);
+  };
+
   return (
     <Container className="d-flex justify-content-center loginRegisterContainer">
       <Row className="align-items-center">
@@ -12,17 +23,22 @@ function Login() {
           </h3>
         </Col>
         <Col md={6}>
-          <Form className="pb-3">
+          <Form className="pb-3" onSubmit={handleClick}>
             <Form.Control
               className="mt-3 mb-3"
               type="email"
               placeholder="Email"
+              required
+              ref={email}
             />
 
             <Form.Control
               className="mt-3 mb-3"
               type="password"
               placeholder="Password"
+              minLength={6}
+              required
+              ref={password}
             />
 
             <div className="d-grid gap-2">
