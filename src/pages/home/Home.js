@@ -11,7 +11,7 @@ function Home() {
       <div className="homeContainer">
         <Sidebar />
         <Feed />
-        <Rightbar user="" />
+        <Rightbar user={false} />
       </div>
     </>
   );
