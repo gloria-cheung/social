@@ -27,7 +27,7 @@ function Share(props) {
           />
         </form>
       </Container>
-      <Container className="shareBottom mt-3 ms-0 me-0 d-flex justify-content-between">
+      <Container className="shareBottom mt-3 ms-0 me-0 mb-5 d-flex justify-content-between">
         <ListGroup as="ul" horizontal>
           <ListGroup.Item as="li" className="shareBottomListItem border-0">
             <a href="/">
