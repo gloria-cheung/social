@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Container } from "react-bootstrap";
 import Share from "../share/Share";
 import Post from "../post/Post";
@@ -8,39 +9,36 @@ import "./Feed.scss";
 function Feed(props) {
   const { username } = props;
   const [posts, setPosts] = useState([]);
-  const [currentUser, setCurrentUser] = useState([]);
+
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      // check to see if rendering feed for profile page or home page => then check if profile page belongs to current user or another user
       try {
-        let userId;
+        let profileUserId;
         if (username) {
-          let user = await axios.get(`/users?username=${username}`);
-          userId = user.data._id;
+          const profileUser = await axios.get(`/users?username=${username}`);
+          profileUserId = profileUser.data._id;
         }
+
         const result = username
-          ? await axios.get(`/posts/profile/${userId}`)
-          : await axios.get("/posts/timeline/634ef7118e7c291c399eb556");
+          ? await axios.get(`/posts/profile/${profileUserId}`)
+          : await axios.get(`/posts/timeline/${currentUser._id}`);
         setPosts(result.data);
       } catch (err) {
         console.log(err);
       }
     };
-    const fetchCurrentUser = async () => {
-      try {
-        const result = await axios.get("/users?username=gloria");
-        setCurrentUser(result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+
     fetchPosts();
-    fetchCurrentUser();
-  }, [username]);
+  }, [username, currentUser]);
 
   return (
     <Container className="feed">
-      {!username && <Share currentUser={currentUser} />}
+      {(!username || username === currentUser.username) && (
+        <Share currentUser={currentUser} />
+      )}
       <Container className="postsContainer ps-0 pe-0">
         {posts.map((post) => (
           <Post post={post} key={post._id} />
