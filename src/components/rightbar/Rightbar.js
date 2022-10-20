@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Container, Image, ListGroup, Row, Col } from "react-bootstrap";
+import { Container, Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import Online from "../online/Online";
 import { fetchUserFollowings } from "../../apiCalls";
 import "./Rightbar.scss";
@@ -9,12 +9,19 @@ function Rightbar(props) {
   const { user } = props;
   const { currentUser } = useContext(AuthContext);
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
+  const [userFollowings, setUserFollowings] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    fetchUserFollowings(currentUser._id).then((res) => {
+    const fetchData = async () => {
+      const res = await fetchUserFollowings(currentUser._id);
       setCurrentUserFollowings(res);
-    });
-  }, [currentUser]);
+
+      const res2 = await fetchUserFollowings(user._id);
+      setUserFollowings(res2);
+    };
+    fetchData();
+  }, [currentUser, user]);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -57,7 +64,10 @@ function Rightbar(props) {
   const profileRightBar = (
     <>
       <Container className="userDetailsContainer">
-        <h5>User Info</h5>
+        <div className="userDetailsHeader">
+          <h5>User Info</h5>
+          <Button className="followButton">Friends</Button>
+        </div>
         <p>City: {user.city}</p>
         <p>From: {user.from}</p>
         <p>Relationship: {getRelationshipStatus(user.relationship)}</p>
@@ -65,7 +75,7 @@ function Rightbar(props) {
       <Container className="friendListContainer">
         <h5>User Friends</h5>
         <Row className="flex-wrap">
-          {currentUserFollowings.map((user) => (
+          {userFollowings.map((user) => (
             <Col md={4} className="friendsContainer" key={user._id}>
               <Image
                 className="friendsImage"
