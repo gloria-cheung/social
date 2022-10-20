@@ -66,7 +66,9 @@ function Rightbar(props) {
       <Container className="userDetailsContainer">
         <div className="userDetailsHeader">
           <h5>User Info</h5>
-          <Button className="followButton">Friends</Button>
+          {user.username !== currentUser.username && (
+            <Button className="followButton">Friends</Button>
+          )}
         </div>
         <p>City: {user.city}</p>
         <p>From: {user.from}</p>
