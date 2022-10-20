@@ -21,3 +21,11 @@ export const RegisterSuccess = (user) => {
 export const RegisterFailure = (error) => {
   return { type: "REGISTER_FAILURE", payload: error };
 };
+
+export const Follow = (userId) => {
+  return { type: "FOLLOW", payload: userId };
+};
+
+export const Unfollow = (userId) => {
+  return { type: "UNFOLLOW", payload: userId };
+};
