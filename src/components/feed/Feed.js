@@ -3,7 +3,11 @@ import { AuthContext } from "../../context/AuthContext";
 import { Container } from "react-bootstrap";
 import Share from "../share/Share";
 import Post from "../post/Post";
-import axios from "axios";
+import {
+  fetchUserByUsername,
+  getPostsForProfile,
+  getPostsforTimeline,
+} from "../../apiCalls";
 import "./Feed.scss";
 
 function Feed(props) {
@@ -18,14 +22,14 @@ function Feed(props) {
       try {
         let profileUserId;
         if (username) {
-          const profileUser = await axios.get(`/users?username=${username}`);
-          profileUserId = profileUser.data._id;
+          const profileUser = await fetchUserByUsername(username);
+          profileUserId = profileUser._id;
         }
 
-        const result = username
-          ? await axios.get(`/posts/profile/${profileUserId}`)
-          : await axios.get(`/posts/timeline/${currentUser._id}`);
-        setPosts(result.data);
+        const res = username
+          ? await getPostsForProfile(profileUserId)
+          : await getPostsforTimeline(currentUser._id);
+        setPosts(res);
       } catch (err) {
         console.log(err);
       }
