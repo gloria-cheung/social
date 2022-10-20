@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Container, Image, ListGroup, Row, Col } from "react-bootstrap";
 import Online from "../online/Online";
-import axios from "axios";
+import { fetchUserFollowings } from "../../apiCalls";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
@@ -11,11 +11,9 @@ function Rightbar(props) {
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await axios.get(`/users/${currentUser._id}/followings`);
-      setCurrentUserFollowings(res.data);
-    };
-    fetchUsers();
+    fetchUserFollowings(currentUser._id).then((res) => {
+      setCurrentUserFollowings(res);
+    });
   }, [currentUser]);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
