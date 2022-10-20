@@ -10,7 +10,7 @@ import {
   SendOutlined,
 } from "@material-ui/icons";
 import "./Post.scss";
-import axios from "axios";
+import { fetchUserbyId, likePost } from "../../apiCalls";
 import { format } from "timeago.js";
 
 function Post(props) {
@@ -24,15 +24,6 @@ function Post(props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get(`/users?userId=${post.userId}`);
-        setUser(res.data);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-
     const checkIsLiked = () => {
       if (post.likes.includes(currentUser._id)) {
         setIsLiked(true);
@@ -41,12 +32,15 @@ function Post(props) {
       }
     };
 
-    fetchUser();
+    fetchUserbyId(post.userId).then((res) => {
+      setUser(res);
+    });
     checkIsLiked();
   }, [post, currentUser]);
 
   const likeHandler = () => {
-    sendToAPI();
+    likePost(post._id, currentUser._id);
+
     if (!isLiked) {
       setLikes(likes + 1);
       setIsLiked(true);
@@ -54,13 +48,6 @@ function Post(props) {
       setLikes(likes - 1);
       setIsLiked(false);
     }
-  };
-
-  const sendToAPI = async () => {
-    const res = await axios.put(`/posts/${post._id}/like`, {
-      userId: currentUser._id,
-    });
-    console.log(res.data);
   };
 
   return (
