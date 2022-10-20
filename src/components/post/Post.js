@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Card, Image } from "react-bootstrap";
 import {
@@ -15,20 +16,37 @@ import { format } from "timeago.js";
 function Post(props) {
   const { post } = props;
   const [likes, setLikes] = useState(post.likes.length);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
   const [user, setUser] = useState({});
+
+  const { currentUser } = useContext(AuthContext);
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
-    axios
-      .get(`/users?userId=${post.userId}`)
-      .then((result) => {
-        setUser(result.data);
-      })
-      .catch((err) => console.log(err));
-  }, [post]);
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(`/users?userId=${post.userId}`);
+        setUser(res.data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+    const checkIsLiked = () => {
+      if (post.likes.includes(currentUser._id)) {
+        setIsLiked(true);
+      } else {
+        setIsLiked(false);
+      }
+    };
+
+    fetchUser();
+    checkIsLiked();
+  }, [post, currentUser]);
 
   const likeHandler = () => {
+    sendToAPI();
     if (!isLiked) {
       setLikes(likes + 1);
       setIsLiked(true);
@@ -36,6 +54,13 @@ function Post(props) {
       setLikes(likes - 1);
       setIsLiked(false);
     }
+  };
+
+  const sendToAPI = async () => {
+    const res = await axios.put(`/posts/${post._id}/like`, {
+      userId: currentUser._id,
+    });
+    console.log(res.data);
   };
 
   return (
