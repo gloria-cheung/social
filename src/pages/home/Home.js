@@ -11,7 +11,7 @@ function Home() {
       <div className="homeContainer">
         <Sidebar />
         <Feed />
-        <Rightbar user={false} />
+        <Rightbar user={{}} />
       </div>
     </>
   );
