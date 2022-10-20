@@ -10,9 +10,7 @@ import {
   EventOutlined,
   SchoolOutlined,
 } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import CloseFriends from "../closefriends/CloseFriends";
-
 import "./Sidebar.scss";
 
 function Sidebar() {
@@ -53,7 +51,7 @@ function Sidebar() {
       <Button className="ps-5 pe-5">Show More</Button>
       <hr />
       <ListGroup as="ul" variant="flush">
-        <CloseFriends usersData={Users} />
+        <CloseFriends />
       </ListGroup>
     </Container>
   );

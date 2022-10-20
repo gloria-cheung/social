@@ -1,21 +1,13 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 import { Form, InputGroup, Nav, Navbar, Image, Badge } from "react-bootstrap";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import "./Topbar.scss";
 
 function Topbar() {
-  const [currentUser, setCurrentUser] = useState({});
+  const { currentUser } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  useEffect(() => {
-    axios
-      .get("/users?username=gloria")
-      .then((result) => {
-        setCurrentUser(result.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <Navbar
@@ -25,8 +17,9 @@ function Topbar() {
       expand="lg"
       className="p-1"
     >
-      <Navbar.Brand href="/">Social</Navbar.Brand>
-
+      <Link to="/" className="links">
+        <Navbar.Brand>Social</Navbar.Brand>
+      </Link>
       <Form className="d-flex w-50 justify-content-center">
         <InputGroup>
           <InputGroup.Text id="basic-addon1">
@@ -47,39 +40,36 @@ function Topbar() {
         className="justify-content-end"
         variant=""
       >
-        <Nav className="">
-          <div className="d-flex justify-content-around">
-            <Nav.Link href="/" className="d-flex align-items-center">
-              Home
-            </Nav.Link>
-            <Nav.Link href="/" className="d-flex align-items-center">
-              Timeline
-            </Nav.Link>
-            <Nav.Link href="/" className="iconContainer">
+        <Nav>
+          <div className="d-flex justify-content-center">
+            <Navbar.Text className="iconContainer me-3">
               <Person className="icon" fontSize="large" />
               <Badge className="badge" bg="warning" pill>
                 1
               </Badge>
-            </Nav.Link>
-            <Nav.Link href="/" className="iconContainer">
+            </Navbar.Text>
+            <Navbar.Text className="iconContainer me-3">
               <Chat className="icon" fontSize="large" />
               <Badge className="badge" bg="warning" pill>
                 1
               </Badge>
-            </Nav.Link>
-            <Nav.Link href="/" className="iconContainer">
+            </Navbar.Text>
+
+            <Navbar.Text className="iconContainer me-5">
               <Notifications className="icon" fontSize="large" />
               <Badge className="badge" bg="warning" pill>
                 1
               </Badge>
-            </Nav.Link>
-            <Nav.Link href="/profile/gloria">
-              <Image
-                className="profilePic"
-                src={currentUser.profilePicture || PF + "person/noAvatar.png"}
-                alt="profilepic"
-              />
-            </Nav.Link>
+            </Navbar.Text>
+            <Link to={`/profile/${currentUser.username}`}>
+              <Navbar.Text className="me-3 d-flex">
+                <Image
+                  className="profilePic"
+                  src={currentUser.profilePicture || PF + "person/noAvatar.png"}
+                  alt="profilepic"
+                />
+              </Navbar.Text>
+            </Link>
           </div>
         </Nav>
       </Navbar.Collapse>
