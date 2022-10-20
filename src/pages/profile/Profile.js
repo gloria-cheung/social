@@ -4,7 +4,7 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import axios from "axios";
+import { fetchUserByUsername } from "../../apiCalls";
 import "./Profile.scss";
 
 function Profile() {
@@ -13,15 +13,9 @@ function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const result = await axios.get(`/users?username=${username}`);
-        setUser(result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUser();
+    fetchUserByUsername(username).then((res) => {
+      setUser(res);
+    });
   }, [username]);
 
   return (

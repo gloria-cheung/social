@@ -19,3 +19,42 @@ export const registerCall = async (userCredentials, dispatch) => {
     dispatch({ type: "REGISTER_FAILURE", error: err.message });
   }
 };
+
+export const fetchUserFollowings = async (userId) => {
+  const res = await axios.get(`/users/${userId}/followings`);
+  return res.data;
+};
+
+export const fetchUserByUsername = async (username) => {
+  try {
+    const res = await axios.get(`/users?username=${username}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchUserbyId = async (userId) => {
+  try {
+    const res = await axios.get(`/users?userId=${userId}`);
+    return res.data;
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const likePost = async (postId, userId) => {
+  await axios.put(`/posts/${postId}/like`, {
+    userId: userId,
+  });
+};
+
+export const getPostsForProfile = async (userId) => {
+  const res = await axios.get(`/posts/profile/${userId}`);
+  return res.data;
+};
+
+export const getPostsforTimeline = async (userId) => {
+  const res = await axios.get(`/posts/timeline/${userId}`);
+  return res.data;
+};
