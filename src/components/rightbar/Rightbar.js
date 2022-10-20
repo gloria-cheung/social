@@ -1,12 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 import { Container, Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import Online from "../online/Online";
 import { fetchUserFollowings } from "../../apiCalls";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
-  const { user } = props;
+  const { user, home } = props;
   const { currentUser } = useContext(AuthContext);
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
   const [userFollowings, setUserFollowings] = useState([]);
@@ -88,11 +89,13 @@ function Rightbar(props) {
         <Row className="flex-wrap">
           {userFollowings.map((user) => (
             <Col md={4} className="friendsContainer" key={user._id}>
-              <Image
-                className="friendsImage"
-                src={user.profilePicture || PF + "person/noAvatar.png"}
-                alt="friends"
-              />
+              <Link to={`/profile/${user.username}`}>
+                <Image
+                  className="friendsImage"
+                  src={user.profilePicture || PF + "person/noAvatar.png"}
+                  alt="friends"
+                />
+              </Link>
               <p className="friendsUsername">{user.username}</p>
             </Col>
           ))}
@@ -102,7 +105,7 @@ function Rightbar(props) {
   );
   return (
     <Container className="rightbar pt-3">
-      {user ? profileRightBar : homeRightBar}
+      {home ? homeRightBar : profileRightBar}
     </Container>
   );
 }
