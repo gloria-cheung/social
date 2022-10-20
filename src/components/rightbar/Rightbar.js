@@ -3,36 +3,56 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Container, Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import Online from "../online/Online";
-import { fetchUserFollowings } from "../../apiCalls";
+import { fetchUserFollowings, unfollowUser, followUser } from "../../apiCalls";
+import { Add } from "@material-ui/icons";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
   const { user, home } = props;
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, dispatch } = useContext(AuthContext);
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
   const [userFollowings, setUserFollowings] = useState([]);
+  const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetchUserFollowings(currentUser._id);
+    fetchUserFollowings(currentUser._id)
+      .then((res) => {
         setCurrentUserFollowings(res);
+      })
+      .catch((err) => console.log(err.message));
+  }, [currentUser]);
 
-        if (user._id) {
-          const res2 = await fetchUserFollowings(user._id);
-          setUserFollowings(res2);
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    fetchData();
-  }, [currentUser, user]);
+  useEffect(() => {
+    if (user._id) {
+      fetchUserFollowings(user._id)
+        .then((res) => {
+          setUserFollowings(res);
+        })
+        .catch((err) => console.log(err.message));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (currentUser.followings.includes(user._id)) {
+      setFollowed(true);
+    } else {
+      setFollowed(false);
+    }
+  }, [currentUser, user._id]);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const isFriend = () => {
-    return currentUser.followings.includes(user._id) ? "Friends" : "Follow";
+  const handleClick = async () => {
+    // if current user follows this user, clicking should unfollow them and vice versa
+    if (followed) {
+      const res = await unfollowUser(user._id, currentUser._id);
+      dispatch({ type: "UNFOLLOW", payload: user._id });
+      setFollowed(false);
+    } else {
+      const res = await followUser(user._id, currentUser._id);
+      dispatch({ type: "FOLLOW", payload: user._id });
+      setFollowed(true);
+    }
   };
 
   const getRelationshipStatus = (num) => {
@@ -77,7 +97,10 @@ function Rightbar(props) {
         <div className="userDetailsHeader">
           <h5>User Info</h5>
           {user.username !== currentUser.username && (
-            <Button className="followButton">{isFriend()}</Button>
+            <Button className="followButton" onClick={handleClick}>
+              {followed ? "Friends" : "Follow"}
+              {!followed && <Add />}
+            </Button>
           )}
         </div>
         <p>City: {user.city}</p>
