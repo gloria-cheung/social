@@ -10,20 +10,29 @@ function Rightbar(props) {
   const { currentUser } = useContext(AuthContext);
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
   const [userFollowings, setUserFollowings] = useState([]);
-  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetchUserFollowings(currentUser._id);
-      setCurrentUserFollowings(res);
+      try {
+        const res = await fetchUserFollowings(currentUser._id);
+        setCurrentUserFollowings(res);
 
-      const res2 = await fetchUserFollowings(user._id);
-      setUserFollowings(res2);
+        if (user._id) {
+          const res2 = await fetchUserFollowings(user._id);
+          setUserFollowings(res2);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
     };
     fetchData();
   }, [currentUser, user]);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const isFriend = () => {
+    return currentUser.followings.includes(user._id) ? "Friends" : "Follow";
+  };
 
   const getRelationshipStatus = (num) => {
     switch (num) {
@@ -67,7 +76,7 @@ function Rightbar(props) {
         <div className="userDetailsHeader">
           <h5>User Info</h5>
           {user.username !== currentUser.username && (
-            <Button className="followButton">Friends</Button>
+            <Button className="followButton">{isFriend()}</Button>
           )}
         </div>
         <p>City: {user.city}</p>
