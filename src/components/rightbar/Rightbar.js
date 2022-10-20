@@ -1,22 +1,59 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Container, Image, ListGroup, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Container, Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import Online from "../online/Online";
-import { fetchUserFollowings } from "../../apiCalls";
+import { fetchUserFollowings, unfollowUser, followUser } from "../../apiCalls";
+import { Add } from "@material-ui/icons";
 import "./Rightbar.scss";
 
 function Rightbar(props) {
-  const { user } = props;
-  const { currentUser } = useContext(AuthContext);
+  const { user, home } = props;
+  const { currentUser, dispatch } = useContext(AuthContext);
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
+  const [userFollowings, setUserFollowings] = useState([]);
+  const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
-    fetchUserFollowings(currentUser._id).then((res) => {
-      setCurrentUserFollowings(res);
-    });
+    fetchUserFollowings(currentUser._id)
+      .then((res) => {
+        setCurrentUserFollowings(res);
+      })
+      .catch((err) => console.log(err.message));
   }, [currentUser]);
 
+  useEffect(() => {
+    if (user._id) {
+      fetchUserFollowings(user._id)
+        .then((res) => {
+          setUserFollowings(res);
+        })
+        .catch((err) => console.log(err.message));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (currentUser.followings.includes(user._id)) {
+      setFollowed(true);
+    } else {
+      setFollowed(false);
+    }
+  }, [currentUser, user._id]);
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const handleClick = async () => {
+    // if current user follows this user, clicking should unfollow them and vice versa
+    if (followed) {
+      const res = await unfollowUser(user._id, currentUser._id);
+      dispatch({ type: "UNFOLLOW", payload: user._id });
+      setFollowed(false);
+    } else {
+      const res = await followUser(user._id, currentUser._id);
+      dispatch({ type: "FOLLOW", payload: user._id });
+      setFollowed(true);
+    }
+  };
 
   const getRelationshipStatus = (num) => {
     switch (num) {
@@ -57,7 +94,15 @@ function Rightbar(props) {
   const profileRightBar = (
     <>
       <Container className="userDetailsContainer">
-        <h5>User Info</h5>
+        <div className="userDetailsHeader">
+          <h5>User Info</h5>
+          {user.username !== currentUser.username && (
+            <Button className="followButton" onClick={handleClick}>
+              {followed ? "Friends" : "Follow"}
+              {!followed && <Add />}
+            </Button>
+          )}
+        </div>
         <p>City: {user.city}</p>
         <p>From: {user.from}</p>
         <p>Relationship: {getRelationshipStatus(user.relationship)}</p>
@@ -65,13 +110,15 @@ function Rightbar(props) {
       <Container className="friendListContainer">
         <h5>User Friends</h5>
         <Row className="flex-wrap">
-          {currentUserFollowings.map((user) => (
+          {userFollowings.map((user) => (
             <Col md={4} className="friendsContainer" key={user._id}>
-              <Image
-                className="friendsImage"
-                src={user.profilePicture || PF + "person/noAvatar.png"}
-                alt="friends"
-              />
+              <Link to={`/profile/${user.username}`}>
+                <Image
+                  className="friendsImage"
+                  src={user.profilePicture || PF + "person/noAvatar.png"}
+                  alt="friends"
+                />
+              </Link>
               <p className="friendsUsername">{user.username}</p>
             </Col>
           ))}
@@ -81,7 +128,7 @@ function Rightbar(props) {
   );
   return (
     <Container className="rightbar pt-3">
-      {user ? profileRightBar : homeRightBar}
+      {home ? homeRightBar : profileRightBar}
     </Container>
   );
 }

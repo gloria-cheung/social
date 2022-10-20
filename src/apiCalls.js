@@ -44,9 +44,10 @@ export const fetchUserbyId = async (userId) => {
 };
 
 export const likePost = async (postId, userId) => {
-  await axios.put(`/posts/${postId}/like`, {
+  const res = await axios.put(`/posts/${postId}/like`, {
     userId: userId,
   });
+  return res.data;
 };
 
 export const getPostsForProfile = async (userId) => {
@@ -56,5 +57,19 @@ export const getPostsForProfile = async (userId) => {
 
 export const getPostsforTimeline = async (userId) => {
   const res = await axios.get(`/posts/timeline/${userId}`);
+  return res.data;
+};
+
+export const unfollowUser = async (userId, currentUserId) => {
+  const res = await axios.put(`/users/${userId}/unfollow`, {
+    userId: currentUserId,
+  });
+  return res.data;
+};
+
+export const followUser = async (userId, currentUserId) => {
+  const res = await axios.put(`/users/${userId}/follow`, {
+    userId: currentUserId,
+  });
   return res.data;
 };
