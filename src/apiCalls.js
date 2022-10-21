@@ -21,8 +21,12 @@ export const registerCall = async (userCredentials, dispatch) => {
 };
 
 export const fetchUserFollowings = async (userId) => {
-  const res = await axios.get(`/users/${userId}/followings`);
-  return res.data;
+  try {
+    const res = await axios.get(`/users/${userId}/followings`);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };
 
 export const fetchUserByUsername = async (username) => {
@@ -30,7 +34,7 @@ export const fetchUserByUsername = async (username) => {
     const res = await axios.get(`/users?username=${username}`);
     return res.data;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
@@ -39,37 +43,57 @@ export const fetchUserbyId = async (userId) => {
     const res = await axios.get(`/users?userId=${userId}`);
     return res.data;
   } catch (err) {
-    console.log(err.message);
+    return err;
   }
 };
 
 export const likePost = async (postId, userId) => {
-  const res = await axios.put(`/posts/${postId}/like`, {
-    userId: userId,
-  });
-  return res.data;
+  try {
+    const res = await axios.put(`/posts/${postId}/like`, {
+      userId: userId,
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };
 
 export const getPostsForProfile = async (userId) => {
-  const res = await axios.get(`/posts/profile/${userId}`);
-  return res.data;
+  try {
+    const res = await axios.get(`/posts/profile/${userId}`);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };
 
 export const getPostsforTimeline = async (userId) => {
-  const res = await axios.get(`/posts/timeline/${userId}`);
-  return res.data;
+  try {
+    const res = await axios.get(`/posts/timeline/${userId}`);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };
 
 export const unfollowUser = async (userId, currentUserId) => {
-  const res = await axios.put(`/users/${userId}/unfollow`, {
-    userId: currentUserId,
-  });
-  return res.data;
+  try {
+    const res = await axios.put(`/users/${userId}/unfollow`, {
+      userId: currentUserId,
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };
 
 export const followUser = async (userId, currentUserId) => {
-  const res = await axios.put(`/users/${userId}/follow`, {
-    userId: currentUserId,
-  });
-  return res.data;
+  try {
+    const res = await axios.put(`/users/${userId}/follow`, {
+      userId: currentUserId,
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
 };

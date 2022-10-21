@@ -1,13 +1,21 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, InputGroup, Nav, Navbar, Image, Badge } from "react-bootstrap";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import "./Topbar.scss";
 
 function Topbar() {
   const { currentUser } = useContext(AuthContext);
+  const search = useRef();
+  const history = useHistory();
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+    history.push(`/profile/${search.current.value}`);
+  };
 
   return (
     <Navbar
@@ -20,15 +28,18 @@ function Topbar() {
       <Link to="/" className="links">
         <Navbar.Brand>Social</Navbar.Brand>
       </Link>
-      <Form className="d-flex w-50 justify-content-center">
+      <Form
+        onSubmit={searchHandler}
+        className="d-flex w-50 justify-content-center"
+      >
         <InputGroup>
           <InputGroup.Text id="basic-addon1">
             <Search />
           </InputGroup.Text>
           <Form.Control
             placeholder="Search for friend, post or video"
-            aria-label="Username"
             aria-describedby="basic-addon1"
+            ref={search}
           />
         </InputGroup>
       </Form>

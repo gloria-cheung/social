@@ -42,16 +42,20 @@ function Rightbar(props) {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const handleClick = async () => {
+  const handleFollow = async () => {
     // if current user follows this user, clicking should unfollow them and vice versa
-    if (followed) {
-      const res = await unfollowUser(user._id, currentUser._id);
-      dispatch({ type: "UNFOLLOW", payload: user._id });
-      setFollowed(false);
-    } else {
-      const res = await followUser(user._id, currentUser._id);
-      dispatch({ type: "FOLLOW", payload: user._id });
-      setFollowed(true);
+    try {
+      if (followed) {
+        await unfollowUser(user._id, currentUser._id);
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+        setFollowed(false);
+      } else {
+        await followUser(user._id, currentUser._id);
+        dispatch({ type: "FOLLOW", payload: user._id });
+        setFollowed(true);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -97,7 +101,7 @@ function Rightbar(props) {
         <div className="userDetailsHeader">
           <h5>User Info</h5>
           {user.username !== currentUser.username && (
-            <Button className="followButton" onClick={handleClick}>
+            <Button onClick={handleFollow}>
               {followed ? "Friends" : "Follow"}
               {!followed && <Add />}
             </Button>
