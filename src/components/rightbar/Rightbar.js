@@ -44,14 +44,18 @@ function Rightbar(props) {
 
   const handleClick = async () => {
     // if current user follows this user, clicking should unfollow them and vice versa
-    if (followed) {
-      await unfollowUser(user._id, currentUser._id);
-      dispatch({ type: "UNFOLLOW", payload: user._id });
-      setFollowed(false);
-    } else {
-      await followUser(user._id, currentUser._id);
-      dispatch({ type: "FOLLOW", payload: user._id });
-      setFollowed(true);
+    try {
+      if (followed) {
+        await unfollowUser(user._id, currentUser._id);
+        dispatch({ type: "UNFOLLOW", payload: user._id });
+        setFollowed(false);
+      } else {
+        await followUser(user._id, currentUser._id);
+        dispatch({ type: "FOLLOW", payload: user._id });
+        setFollowed(true);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
