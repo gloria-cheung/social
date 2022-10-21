@@ -29,3 +29,7 @@ export const Follow = (userId) => {
 export const Unfollow = (userId) => {
   return { type: "UNFOLLOW", payload: userId };
 };
+
+export const EditProfile = (user) => {
+  return { type: "EDIT_PROFILE", payload: user };
+};

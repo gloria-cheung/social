@@ -106,6 +106,11 @@ function Rightbar(props) {
               {!followed && <Add />}
             </Button>
           )}
+          {user.username === currentUser.username && (
+            <Link to={`/profile/${currentUser.username}?edit=true`}>
+              <Button>Edit Profile</Button>
+            </Link>
+          )}
         </div>
         <p>City: {user.city}</p>
         <p>From: {user.from}</p>

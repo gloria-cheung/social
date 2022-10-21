@@ -97,3 +97,15 @@ export const followUser = async (userId, currentUserId) => {
     return err;
   }
 };
+
+export const editProfile = async (userId, user) => {
+  try {
+    const res = await axios.put(`/users/${userId}`, {
+      ...user,
+      userId: userId,
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
