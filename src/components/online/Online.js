@@ -14,7 +14,7 @@ function Online(props) {
       <div className="onlineFriendsImageContainer">
         <Image
           className="profilePic me-2"
-          src={PF + (user.profilePicture || "person/noAvatar.png")}
+          src={user.profilePicture || PF + "/noAvatar.png"}
           alt="profilepic"
         />
         <span className="online"></span>

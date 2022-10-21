@@ -74,7 +74,7 @@ function Post(props) {
                 <Link to={`/profile/${user.username}`}>
                   <Image
                     className="profilePic me-2"
-                    src={PF + (user.profilePicture || "person/noAvatar.png")}
+                    src={user.profilePicture || PF + "/noAvatar.png"}
                     alt="profilepic"
                   />
                 </Link>
@@ -86,7 +86,7 @@ function Post(props) {
               </div>
             </Card.Header>
 
-            <Card.Img variant="top" src={PF + post.img} />
+            <Card.Img variant="top" src={post.img} />
 
             <Card.Body>
               <div className="cardImgFooter">
