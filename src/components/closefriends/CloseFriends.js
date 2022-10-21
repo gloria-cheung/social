@@ -22,7 +22,7 @@ function CloseFriends() {
         currentUserFollowings.map((user) => (
           <ListGroup.Item as="li" key={user._id} className="border-0">
             <Image
-              src={user.profilePicture || PF + "person/noAvatar.png"}
+              src={PF + (user.profilePicture || "person/noAvatar.png")}
               alt="followingsImg"
               className="followingsImg"
             />

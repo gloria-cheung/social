@@ -76,7 +76,7 @@ function Rightbar(props) {
     <>
       <Container className="birthdayContainer d-flex">
         <Image
-          src="./assets/gift.png"
+          src={PF + "gift.png"}
           alt="birthdayLogo"
           className="birthdayLogo me-2"
         />
@@ -85,7 +85,7 @@ function Rightbar(props) {
         </p>
       </Container>
       <Container className="adContainer">
-        <Image rounded src="./assets/ad.png" alt="ad" className="w-100" />
+        <Image rounded src={PF + "ad.png"} alt="ad" className="w-100" />
       </Container>
       <Container className="friendListContainer">
         <h5>Online Friends</h5>
@@ -124,7 +124,7 @@ function Rightbar(props) {
               <Link to={`/profile/${user.username}`}>
                 <Image
                   className="friendsImage"
-                  src={user.profilePicture || PF + "person/noAvatar.png"}
+                  src={PF + (user.profilePicture || "person/noAvatar.png")}
                   alt="friends"
                 />
               </Link>

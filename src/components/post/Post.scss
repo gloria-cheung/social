@@ -14,7 +14,14 @@
     cursor: pointer;
   }
 }
-.more {
-  display: flex;
-  justify-content: flex-end;
+.options {
+  :hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+}
+.modalItem {
+  :hover {
+    cursor: pointer;
+  }
 }

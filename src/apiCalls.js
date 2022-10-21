@@ -109,3 +109,41 @@ export const editProfile = async (userId, user) => {
     return err;
   }
 };
+
+export const sharePost = async (userId, post) => {
+  try {
+    const res = await axios.post("/posts", {
+      ...post,
+      userId: userId,
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const uploadPhoto = async (data) => {
+  try {
+    console.log(data);
+    const res = await axios.post("/upload", data);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deletePost = async (postId, userId) => {
+  try {
+    // axios does not accept shortcut of: axios.delete(url, {body})
+    const res = await axios({
+      method: "delete",
+      url: `/posts/${postId}`,
+      data: {
+        userId: userId,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
