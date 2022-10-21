@@ -121,3 +121,19 @@ export const sharePost = async (userId, post) => {
     return err;
   }
 };
+
+export const deletePost = async (postId, userId) => {
+  try {
+    // axios does not accept shortcut of: axios.delete(url, {body})
+    const res = await axios({
+      method: "delete",
+      url: `/posts/${postId}`,
+      data: {
+        userId: userId,
+      },
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
