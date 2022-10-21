@@ -122,16 +122,6 @@ export const sharePost = async (userId, post) => {
   }
 };
 
-export const uploadPhoto = async (data) => {
-  try {
-    console.log(data);
-    const res = await axios.post("/upload", data);
-    return res.data;
-  } catch (err) {
-    return err;
-  }
-};
-
 export const deletePost = async (postId, userId) => {
   try {
     // axios does not accept shortcut of: axios.delete(url, {body})
