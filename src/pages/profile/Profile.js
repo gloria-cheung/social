@@ -10,12 +10,17 @@ import "./Profile.scss";
 function Profile() {
   let { username } = useParams();
   const [user, setUser] = useState({});
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetchUserByUsername(username);
-      setUser(res);
+      try {
+        const res = await fetchUserByUsername(username);
+        setUser(res);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
   }, [username]);
