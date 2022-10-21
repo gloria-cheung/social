@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { ListGroup, Image, Container, Button } from "react-bootstrap";
 import {
   PermMediaOutlined,
   LabelOutlined,
   LocationOnOutlined,
   TagFacesOutlined,
+  Cancel,
 } from "@material-ui/icons";
 import { sharePost } from "../../apiCalls";
 import storage from "../../firebaseConfig";
@@ -16,7 +16,6 @@ function Share(props) {
   const { currentUser } = props;
   const desc = useRef();
   const [file, setFile] = useState(null);
-  const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -41,7 +40,7 @@ function Share(props) {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               post.img = url;
               sharePost(currentUser._id, post).then(() => {
-                history.push("/");
+                window.location.reload();
               });
             });
           }
@@ -75,6 +74,16 @@ function Share(props) {
           />
         </form>
       </Container>
+      {file && (
+        <Container className="shareImgContainer">
+          <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+          <img
+            className="shareImg"
+            alt="shareImg"
+            src={URL.createObjectURL(file)}
+          />
+        </Container>
+      )}
       <Container className="shareBottom mt-3 ms-0 me-0 mb-5 d-flex justify-content-between">
         <ListGroup horizontal>
           <ListGroup.Item className="shareBottomListItem border-0">
