@@ -31,7 +31,7 @@ function App() {
           <Profile />
         </Route>
         <Route path="/profile/:username?edit=true">
-          <Profile edit />
+          <Profile />
         </Route>
       </Switch>
     </Router>
