@@ -88,7 +88,7 @@ function Post(props) {
 
           <ChatBubbleOutlineOutlined className="cardImgFooterIcon" />
           <SendOutlined className="cardImgFooterIcon" />
-          <p>Liked by {likes} people</p>
+          <p>Liked by {likes === 1 ? `${likes} person` : `${likes} people`}</p>
         </div>
         <Card.Text>{post.desc && post.desc}</Card.Text>
       </Card.Body>
