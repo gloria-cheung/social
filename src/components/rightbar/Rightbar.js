@@ -42,7 +42,7 @@ function Rightbar(props) {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const handleClick = async () => {
+  const handleFollow = async () => {
     // if current user follows this user, clicking should unfollow them and vice versa
     try {
       if (followed) {
@@ -101,7 +101,7 @@ function Rightbar(props) {
         <div className="userDetailsHeader">
           <h5>User Info</h5>
           {user.username !== currentUser.username && (
-            <Button className="followButton" onClick={handleClick}>
+            <Button onClick={handleFollow}>
               {followed ? "Friends" : "Follow"}
               {!followed && <Add />}
             </Button>
