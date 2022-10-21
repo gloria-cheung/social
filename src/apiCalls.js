@@ -109,3 +109,15 @@ export const editProfile = async (userId, user) => {
     return err;
   }
 };
+
+export const sharePost = async (userId, post) => {
+  try {
+    const res = await axios.post("/posts", {
+      ...post,
+      userId: userId,
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
