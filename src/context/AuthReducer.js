@@ -54,6 +54,14 @@ const AuthReducer = (state, action) => {
           ),
         },
       };
+    case "EDIT_PROFILE":
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          ...action.payload,
+        },
+      };
     default:
       return state;
   }
