@@ -6,9 +6,10 @@ import {
   LabelOutlined,
   LocationOnOutlined,
   TagFacesOutlined,
-  CodeSharp,
 } from "@material-ui/icons";
-import { sharePost, uploadPhoto } from "../../apiCalls";
+import { sharePost } from "../../apiCalls";
+import storage from "../../firebaseConfig";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./Share.scss";
 
 function Share(props) {
@@ -23,20 +24,31 @@ function Share(props) {
 
     try {
       if (file) {
-        const data = new FormData();
-        // to have unique name in case other users name their files the same
-        const fileName = Date.now() + file.name;
-        data.append("name", fileName);
-        data.append("file", file);
-
-        post.img = fileName;
-
-        // need to upload photo to serverside public folder but also save path to image in db for the post
-        await uploadPhoto(data);
-        await sharePost(currentUser._id, post);
-        history.push("/");
+        const storageRef = ref(storage, `/files/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // const percent = Math.round(
+            //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            // );
+            // // show progress
+            // console.log(percent);
+          },
+          (err) => console.log(err),
+          () => {
+            // download url
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              post.img = url;
+              sharePost(currentUser._id, post).then(() => {
+                history.push("/");
+              });
+            });
+          }
+        );
+      } else {
+        alert("Please upload a file first!");
       }
-
       e.value = null;
     } catch (err) {
       console.log(err);
@@ -50,7 +62,7 @@ function Share(props) {
       <Container className="shareTop pt-3 pb-3 border-bottom">
         <Image
           className="profilePic me-3"
-          src={PF + (currentUser.profilePicture || "person/noAvatar.png")}
+          src={currentUser.profilePicture || PF + "/noAvatar.png"}
           alt="profilepic"
         />
         <form onSubmit={submitHandler} id="sharePost">
@@ -59,6 +71,7 @@ function Share(props) {
             type="text"
             placeholder={`What's on your mind, ${currentUser.username}?`}
             ref={desc}
+            required
           />
         </form>
       </Container>
