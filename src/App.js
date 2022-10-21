@@ -10,7 +10,6 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-
 import "./App.scss";
 
 function App() {
@@ -30,6 +29,9 @@ function App() {
         </Route>
         <Route path="/profile/:username">
           <Profile />
+        </Route>
+        <Route path="/profile/:username?edit=true">
+          <Profile edit />
         </Route>
       </Switch>
     </Router>
