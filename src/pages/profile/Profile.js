@@ -37,7 +37,7 @@ function Profile() {
         <div className="right">
           <div className="rightTop">
             <img
-              src={user.coverPicture || PF + "person/noCover.png"}
+              src={PF + (user.coverPicture || "person/noCover.png")}
               alt="coverPicture"
               className="coverPicture"
             />
@@ -46,7 +46,7 @@ function Profile() {
               <p>{user.desc}</p>
             </div>
             <img
-              src={user.profilePicture || PF + "person/noAvatar.png"}
+              src={PF + (user.profilePicture || "person/noAvatar.png")}
               alt="profilePic"
               className="profilePic"
             />

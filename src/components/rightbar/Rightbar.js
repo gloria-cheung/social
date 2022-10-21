@@ -124,7 +124,7 @@ function Rightbar(props) {
               <Link to={`/profile/${user.username}`}>
                 <Image
                   className="friendsImage"
-                  src={user.profilePicture || PF + "person/noAvatar.png"}
+                  src={PF + (user.profilePicture || "person/noAvatar.png")}
                   alt="friends"
                 />
               </Link>

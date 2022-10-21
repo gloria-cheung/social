@@ -76,7 +76,9 @@ function Topbar() {
               <Navbar.Text className="me-3 d-flex">
                 <Image
                   className="profilePic"
-                  src={currentUser.profilePicture || PF + "person/noAvatar.png"}
+                  src={
+                    PF + (currentUser.profilePicture || "person/noAvatar.png")
+                  }
                   alt="profilepic"
                 />
               </Navbar.Text>
