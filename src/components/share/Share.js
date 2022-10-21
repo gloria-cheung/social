@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { ListGroup, Image, Container, Button } from "react-bootstrap";
 import {
   PermMediaOutlined,
@@ -9,6 +10,13 @@ import "./Share.scss";
 
 function Share(props) {
   const { currentUser } = props;
+  const desc = useRef();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // console.log(desc.current.value);
+  };
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
@@ -19,11 +27,12 @@ function Share(props) {
           src={currentUser.profilePicture || PF + "person/noAvatar.png"}
           alt="profilepic"
         />
-        <form>
+        <form onSubmit={submitHandler} id="sharePost">
           <input
             className="status"
             type="text"
             placeholder={`What's on your mind, ${currentUser.username}?`}
+            ref={desc}
           />
         </form>
       </Container>
@@ -54,7 +63,9 @@ function Share(props) {
             </a>
           </ListGroup.Item>
         </ListGroup>
-        <Button size="sm">Share</Button>
+        <Button type="submit" size="sm" form="sharePost">
+          Share
+        </Button>
       </Container>
     </div>
   );
