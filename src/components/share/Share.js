@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { ListGroup, Image, Container, Button } from "react-bootstrap";
 import {
   PermMediaOutlined,
@@ -6,15 +7,20 @@ import {
   LocationOnOutlined,
   TagFacesOutlined,
 } from "@material-ui/icons";
+import { sharePost } from "../../apiCalls";
 import "./Share.scss";
 
 function Share(props) {
   const { currentUser } = props;
   const desc = useRef();
+  const history = useHistory();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    // console.log(desc.current.value);
+
+    const post = { desc: desc.current.value };
+    await sharePost(currentUser._id, post);
+    history.push(`/profile/${currentUser.username}`);
   };
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
