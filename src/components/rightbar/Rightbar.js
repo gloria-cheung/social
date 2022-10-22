@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Container, Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import Online from "../online/Online";
 import { fetchUserFollowings, unfollowUser, followUser } from "../../apiCalls";
@@ -13,6 +13,8 @@ function Rightbar(props) {
   const [currentUserFollowings, setCurrentUserFollowings] = useState([]);
   const [userFollowings, setUserFollowings] = useState([]);
   const [followed, setFollowed] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     fetchUserFollowings(currentUser._id)
@@ -57,6 +59,11 @@ function Rightbar(props) {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleLogout = async () => {
+    dispatch({ type: "LOGOUT_SUCCESS" });
+    history.push("/");
   };
 
   const getRelationshipStatus = (num) => {
@@ -107,9 +114,14 @@ function Rightbar(props) {
             </Button>
           )}
           {user.username === currentUser.username && (
-            <Link to={`/profile/${currentUser.username}?edit=true`}>
-              <Button>Edit Profile</Button>
-            </Link>
+            <>
+              <Link to={`/profile/${currentUser.username}?edit=true`}>
+                <Button size="sm">Edit Profile</Button>
+              </Link>
+              <Button size="sm" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
           )}
         </div>
         <p>City: {user.city}</p>
