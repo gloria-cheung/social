@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { ListGroup, Image, Container, Button } from "react-bootstrap";
 import {
   PermMediaOutlined,
@@ -13,9 +14,11 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./Share.scss";
 
 function Share(props) {
-  const { currentUser } = props;
+  const { currentUser, resetPosts } = props;
   const desc = useRef();
   const [file, setFile] = useState(null);
+  const { username } = useParams();
+  const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -40,7 +43,15 @@ function Share(props) {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               post.img = url;
               sharePost(currentUser._id, post).then(() => {
-                window.location.reload();
+                // refetch the posts from parent component and reset form
+                resetPosts();
+                desc.current.value = "";
+                setFile(null);
+
+                // redirect to profile page if in home page
+                if (!username) {
+                  history.push(`/profile/${currentUser.username}`);
+                }
               });
             });
           }
