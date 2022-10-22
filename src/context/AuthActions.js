@@ -22,6 +22,10 @@ export const RegisterFailure = (error) => {
   return { type: "REGISTER_FAILURE", payload: error };
 };
 
+export const LogoutSuccess = () => {
+  return { type: "LOGOUT_SUCCESS" };
+};
+
 export const Follow = (userId) => {
   return { type: "FOLLOW", payload: userId };
 };
