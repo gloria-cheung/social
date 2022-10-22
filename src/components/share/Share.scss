@@ -31,5 +31,30 @@
     cursor: pointer;
     opacity: 0.5;
   }
-  
+  label{
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    } 
+  }
+}
+.shareImgContainer {
+  position: relative;
+  padding-top: 0.5em;
+  .shareCancelImg {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    color: white;
+    background-color: #2b2d42;
+    border-radius: 50%;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+  .shareImg {
+    width: 100%;
+    object-fit: contain;
+  }
 }

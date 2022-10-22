@@ -1,20 +1,23 @@
 import { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { ListGroup, Image, Container, Button } from "react-bootstrap";
 import {
   PermMediaOutlined,
   LabelOutlined,
   LocationOnOutlined,
   TagFacesOutlined,
-  CodeSharp,
+  Cancel,
 } from "@material-ui/icons";
-import { sharePost, uploadPhoto } from "../../apiCalls";
+import { sharePost } from "../../apiCalls";
+import storage from "../../firebaseConfig";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./Share.scss";
 
 function Share(props) {
-  const { currentUser } = props;
+  const { currentUser, resetPosts } = props;
   const desc = useRef();
   const [file, setFile] = useState(null);
+  const { username } = useParams();
   const history = useHistory();
 
   const submitHandler = async (e) => {
@@ -23,20 +26,39 @@ function Share(props) {
 
     try {
       if (file) {
-        const data = new FormData();
-        // to have unique name in case other users name their files the same
-        const fileName = Date.now() + file.name;
-        data.append("name", fileName);
-        data.append("file", file);
+        const storageRef = ref(storage, `/files/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // const percent = Math.round(
+            //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            // );
+            // // show progress
+            // console.log(percent);
+          },
+          (err) => console.log(err),
+          () => {
+            // download url
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              post.img = url;
+              sharePost(currentUser._id, post).then(() => {
+                // refetch the posts from parent component and reset form
+                resetPosts();
+                desc.current.value = "";
+                setFile(null);
 
-        post.img = fileName;
-
-        // need to upload photo to serverside public folder but also save path to image in db for the post
-        await uploadPhoto(data);
-        await sharePost(currentUser._id, post);
-        history.push("/");
+                // redirect to profile page if in home page
+                if (!username) {
+                  history.push(`/profile/${currentUser.username}`);
+                }
+              });
+            });
+          }
+        );
+      } else {
+        alert("Please upload a file first!");
       }
-
       e.value = null;
     } catch (err) {
       console.log(err);
@@ -50,7 +72,7 @@ function Share(props) {
       <Container className="shareTop pt-3 pb-3 border-bottom">
         <Image
           className="profilePic me-3"
-          src={PF + (currentUser.profilePicture || "person/noAvatar.png")}
+          src={currentUser.profilePicture || PF + "/noAvatar.png"}
           alt="profilepic"
         />
         <form onSubmit={submitHandler} id="sharePost">
@@ -59,9 +81,20 @@ function Share(props) {
             type="text"
             placeholder={`What's on your mind, ${currentUser.username}?`}
             ref={desc}
+            required
           />
         </form>
       </Container>
+      {file && (
+        <Container className="shareImgContainer">
+          <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+          <img
+            className="shareImg"
+            alt="shareImg"
+            src={URL.createObjectURL(file)}
+          />
+        </Container>
+      )}
       <Container className="shareBottom mt-3 ms-0 me-0 mb-5 d-flex justify-content-between">
         <ListGroup horizontal>
           <ListGroup.Item className="shareBottomListItem border-0">
