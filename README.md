@@ -1,44 +1,44 @@
 # Social Media App
 
-Social is a social networking app that allows users to connect and share posts with friends and family. This full stack app was created with ReactJS for client side and NodeJS, Express and MongoDB for server side. 
+Social is a social networking app that allows users to connect and share posts with friends and family. This full stack app was created with ReactJS for client side and NodeJS, Express and MongoDB for server side.
 
 ## Final Product
 
 ### Overview
 
-!["overview_of_app"](./public/demo/overview.gif)
+!["overview_of_app"](./client/public/demo/overview.gif)
 
 ### Follow / Unfollow Another User
 
-!["follow_unfollow_user"](./public/demo/follow_user.gif)
+!["follow_unfollow_user"](./client/public/demo/follow_user.gif)
 
 ### Create New Post
 
-!["new_post"](./public/demo/new_post.gif)
+!["new_post"](./client/public/demo/new_post.gif)
 
 ### Delete Post
 
-!["delete_post"](./public/demo/delete_post.gif)
+!["delete_post"](./client/public/demo/delete_post.gif)
 
 ### Like / Dislike Post
 
-!["like_dislike_post"](./public/demo/like_post.gif)
+!["like_dislike_post"](./client/public/demo/like_post.gif)
 
 ### Edit Profile
 
-!["edit_profile"](./public/demo/edit_profile.gif)
+!["edit_profile"](./client/public/demo/edit_profile.gif)
 
 ### Search for User
 
-!["search_user"](./public/demo/search_user.gif)
+!["search_user"](./client/public/demo/search_user.gif)
 
 ### Login / Logout
 
-!["login_logout"](./public/demo/login_logout.gif)
+!["login_logout"](./client/public/demo/login_logout.gif)
 
 ### Register
 
-!["register"](./public/demo/register.gif)
+!["register"](./client/public/demo/register.gif)
 
 ## Setup
 
