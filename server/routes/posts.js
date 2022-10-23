@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
       // create new post with all the data from body
       const post = new Post(req.body);
       const savedPost = await post.save();
-      res.status(200).json(savedPost);
+      res.status(201).json(savedPost);
     } catch (err) {
       res.status(500).json(err.message);
     }
