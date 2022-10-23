@@ -18,7 +18,9 @@ router.post("/register", async (req, res, next) => {
 
     //save user and respond
     const user = await newUser.save();
-    res.status(201).json(user);
+
+    const { password, ...other } = user._doc;
+    res.status(201).json(other);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -42,7 +44,8 @@ router.post("/login", async (req, res, next) => {
       return res.status(400).json("wrong password");
     }
 
-    res.status(200).json(user);
+    const { password, ...other } = user._doc;
+    res.status(200).json(other);
   } catch (err) {
     res.status(500).json(err);
   }
